@@ -1,0 +1,24 @@
+#!/bin/sh
+
+commit_msg_file="$1"
+commit_message=$(head -n 1 "$commit_msg_file")
+
+pattern='^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-z0-9-]+\))?: .+'
+
+if ! echo "$commit_message" | grep -Eq "$pattern"; then
+  echo ""
+  echo "❌ Invalid commit message!"
+  echo ""
+  echo "Expected format:"
+  echo "  type: description"
+  echo ""
+  echo "Examples:"
+  echo "  feat: add game component"
+  echo "  fix: correct game logic"
+  echo "  docs: update README"
+  echo "  chore: configure husky"
+  echo ""
+  exit 1
+fi
+
+echo "✅ Commit message is valid."
