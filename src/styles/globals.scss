@@ -1,15 +1,37 @@
-// src/styles/globals.scss
+@use 'tokens' as tokens;
 
 * {
   box-sizing: border-box;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
+html {
+  font-size: 16px;
 }
 
 body {
-  font-family: Arial, sans-serif;
+  min-width: 320px;
+  margin: 0;
+
+  color: tokens.$color-on-bg;
+  background-color: tokens.$color-bg;
+
+  font-family: tokens.$font-family-inter;
+  font-size: tokens.$font-size-body-medium;
+  font-weight: tokens.$font-weight-regular;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }
