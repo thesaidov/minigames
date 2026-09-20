@@ -1,15 +1,24 @@
 import '../styles/globals.scss';
 
-const app = document.querySelector<HTMLDivElement>('#app');
+import { Router } from './router';
+import { renderHomePage } from '../pages/home/home-page';
+import { renderLibraryPage } from '../pages/library/library-page';
 
-if (app) {
-  app.innerHTML = `
+const app: HTMLDivElement = document.createElement('div');
 
-    <h1>MiniGames</h1>
-    <p>Vite is working!</p>
-    <main>
-      <h1>MiniGames</h1>
-      <p>Welcome to MiniGames!</p>
-    </main>
-  `;
-}
+app.id = 'app';
+
+document.body.append(app);
+
+const router: Router = new Router([
+  {
+    path: '/',
+    render: (): void => renderHomePage(app),
+  },
+  {
+    path: '/library',
+    render: (): void => renderLibraryPage(app),
+  },
+]);
+
+router.handleRoute();
