@@ -1,6 +1,6 @@
-import "../styles/globals.scss";
+import '../styles/globals.scss';
 
-const app = document.querySelector<HTMLDivElement>("#app");
+const app = document.querySelector<HTMLDivElement>('#app');
 
 if (app) {
   app.innerHTML = `

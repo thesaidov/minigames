@@ -21,7 +21,7 @@ Deadline: 21.09.2026
 
 ## Self-check
 
-Score: **_ / _**
+Score: **\_ / _**
 
 ### Checklist
 
