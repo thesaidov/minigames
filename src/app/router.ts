@@ -9,16 +9,18 @@ export class Router {
   public constructor(routes: Route[]) {
     this.routes = routes;
 
-    window.addEventListener('popstate', (): void => {
+    addEventListener('popstate', (): void => {
       this.handleRoute();
     });
 
     document.addEventListener('click', (event: MouseEvent): void => {
-      const target: HTMLElement | null = event.target as HTMLElement | null;
+      const target: HTMLElement | undefined =
+        event.target instanceof HTMLElement ? event.target : undefined;
 
-      const link: HTMLAnchorElement | null = target.closest<HTMLAnchorElement>('[data-link]');
+      const link: HTMLAnchorElement | undefined =
+        target?.closest<HTMLAnchorElement>('[data-link]') ?? undefined;
 
-      if (link === null) {
+      if (link === undefined) {
         return;
       }
 
@@ -28,13 +30,29 @@ export class Router {
     });
   }
 
+  private renderNotFound(): void {
+    const app: HTMLDivElement | undefined =
+      document.querySelector<HTMLDivElement>('#app') ?? undefined;
+
+    if (app === undefined) {
+      return;
+    }
+
+    app.innerHTML = `
+      <main>
+        <h1>404</h1>
+        <p>Page not found.</p>
+      </main>
+    `;
+  }
+
   public navigate(path: string): void {
-    window.history.pushState({}, '', path);
+    history.pushState({}, '', path);
     this.handleRoute();
   }
 
   public handleRoute(): void {
-    const currentPath: string = window.location.pathname;
+    const currentPath: string = location.pathname;
 
     const route: Route | undefined = this.routes.find(
       (item: Route): boolean => item.path === currentPath,
@@ -46,20 +64,5 @@ export class Router {
     }
 
     route.render();
-  }
-
-  private renderNotFound(): void {
-    const app: HTMLDivElement | null = document.querySelector<HTMLDivElement>('#app');
-
-    if (app === null) {
-      return;
-    }
-
-    app.innerHTML = `
-      <main>
-        <h1>404</h1>
-        <p>Page not found.</p>
-      </main>
-    `;
   }
 }
